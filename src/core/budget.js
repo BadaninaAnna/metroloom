@@ -42,7 +42,8 @@ export function typeA(readings) {
  * Standard uncertainty and degrees of freedom of one budget component.
  *
  * Supported methods:
- *  - 'typeA'        { readings } or { s, n }        u = s / sqrt(n), dof = n - 1
+ *  - 'typeA'        { readings } or { s, n, dof? }  u = s / sqrt(n), dof = n - 1
+ *                   (for a pooled s from earlier evaluations pass its own dof)
  *  - 'rectangular'  { halfWidth }                   u = a / sqrt(3)
  *  - 'triangular'   { halfWidth }                   u = a / sqrt(6)
  *  - 'u-shaped'     { halfWidth }                   u = a / sqrt(2)
@@ -64,7 +65,10 @@ export function standardUncertainty(component) {
       if (!Number.isInteger(component.n) || component.n < 2) {
         throw new RangeError('n must be an integer of at least 2');
       }
-      return { u: component.s / Math.sqrt(component.n), dof: component.n - 1 };
+      // A pooled standard deviation from earlier evaluations carries its own
+      // degrees of freedom; pass them as `dof`, otherwise n - 1 is used.
+      const dof = component.dof === undefined || component.dof === null ? component.n - 1 : optionalDof(component.dof);
+      return { u: component.s / Math.sqrt(component.n), dof };
     }
     case 'rectangular':
     case 'triangular':
