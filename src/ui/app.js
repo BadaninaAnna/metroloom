@@ -2,6 +2,8 @@
 import { evaluateBudget, standardUncertainty } from '../core/budget.js';
 import { assessConformity } from '../core/conformity.js';
 import { EXAMPLES } from './examples.js';
+import { CONFIG } from './config.js';
+import { initAnalytics, track } from './analytics.js';
 import { parseNum, isBlank, parseReadings, sig, plain, reportU, pct, escapeHtml as esc } from './format.js';
 
 const METHODS = {
@@ -465,6 +467,7 @@ tbody.addEventListener('input', (e) => {
     tr.outerHTML = rowHtml(row);
   } else if (prop) row[prop] = e.target.value;
   recomputeBudget();
+  if (lastBudget) track('budget-calculated', { once: true });
   saveState();
 });
 
@@ -501,6 +504,7 @@ for (const [id, key] of [['c-value', 'value'], ['c-lower', 'lower'], ['c-upper',
     state.conformity[key] = e.target.value;
     if (key === 'U' || key === 'k') state.conformity.fromBudget = false;
     recomputeConformity();
+    if ($('conformity-results').querySelector('.statement')) track('conformity-assessed', { once: true });
     saveState();
   });
 }
@@ -534,6 +538,7 @@ exampleSelect.addEventListener('change', () => {
   state = stateFromExample(ex);
   renderAll();
   saveState();
+  track(`example-${ex.id}`);
 });
 
 $('clear-btn').addEventListener('click', () => {
@@ -547,8 +552,24 @@ $('clear-btn').addEventListener('click', () => {
 $('print-btn').addEventListener('click', () => {
   const title = state.measurand ? `<strong>${esc(state.measurand)}</strong><br>` : '';
   $('print-meta').innerHTML = `${title}Report printed ${new Date().toLocaleString()} · calculated with Metroloom (metroloom.net)`;
+  track('report-printed');
   window.print();
 });
+
+// Optional feedback and waitlist forms (configured in config.js).
+function setupLink(id, url, event) {
+  const a = $(id);
+  if (!url) return false;
+  a.href = url;
+  a.hidden = false;
+  a.addEventListener('click', () => track(event));
+  return true;
+}
+setupLink('feedback-link', CONFIG.feedbackFormUrl, 'feedback-clicked');
+if (!setupLink('waitlist-link', CONFIG.waitlistFormUrl, 'waitlist-clicked')) {
+  $('waitlist-note').textContent = 'The waitlist opens soon.';
+}
+initAnalytics();
 
 let resizeTimer;
 window.addEventListener('resize', () => {
