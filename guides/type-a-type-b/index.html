@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Type A and Type B uncertainty: divisors √3, √6, √2 explained — Metroloom</title>
+  <meta name="description" content="What Type A and Type B evaluation of uncertainty mean, how to turn readings, certificates and limits into standard uncertainties, and when to use the rectangular (√3), triangular (√6), U-shaped (√2) or normal distribution.">
+  <link rel="canonical" href="https://metroloom.net/guides/type-a-type-b/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="Type A and Type B uncertainty: divisors √3, √6, √2 explained — Metroloom">
+  <meta property="og:description" content="What Type A and Type B evaluation of uncertainty mean, how to turn readings, certificates and limits into standard uncertainties, and when to use the rectangular (√3), triangular (√6), U-shaped (√2) or normal distribution.">
+  <meta property="og:url" content="https://metroloom.net/guides/type-a-type-b/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Type A and Type B uncertainty: which divisor to use","description":"What Type A and Type B evaluation of uncertainty mean, how to turn readings, certificates and limits into standard uncertainties, and when to use the rectangular (√3), triangular (√6), U-shaped (√2) or normal distribution.","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","name":"Anna Badanina","description":"MSc in Metrology and Information-Measuring Technology"},"publisher":{"@type":"Organization","name":"Metroloom","url":"https://metroloom.net"},"mainEntityOfPage":"https://metroloom.net/guides/type-a-type-b/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Metroloom","item":"https://metroloom.net/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://metroloom.net/guides/"},{"@type":"ListItem","position":3,"name":"Type A and Type B uncertainty: which divisor to use","item":"https://metroloom.net/guides/type-a-type-b/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../">Calculator</a>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Metroloom</a> › <a href="../">Guides</a></nav>
+    <article>
+      <h1>Type A and Type B uncertainty: which divisor to use</h1>
+      <p class="byline">By Anna Badanina, MSc in Metrology and Information-Measuring Technology · 8 November 2026</p>
+      <p>Every row of an uncertainty budget must be a <em>standard uncertainty</em>: a value with the meaning of one standard deviation.
+        The GUM (JCGM 100:2008) gives two ways to get it. The names say nothing about importance or quality; they only describe
+        <strong>how</strong> the number was obtained.</p>
+      <ul>
+        <li><strong>Type A</strong>: by statistical analysis of a series of observations you made.</li>
+        <li><strong>Type B</strong>: by any other means, such as certificates, specifications, handbooks, resolution or experience.</li>
+      </ul>
+      <p>Both kinds are combined in the same way in the budget. A Type B uncertainty is not "less accurate" than a Type A one.</p>
+
+      <h2>Type A: from repeated readings</h2>
+      <p>Take n independent readings q<sub>1</sub> … q<sub>n</sub> under the same conditions. Then:</p>
+      <div class="formula">mean q̄ = Σ q<sub>k</sub> / n &nbsp;&nbsp; s = √( Σ (q<sub>k</sub> − q̄)² / (n − 1) ) &nbsp;&nbsp; u(q̄) = s / √n &nbsp;&nbsp; ν = n − 1</div>
+      <p>Example: five readings of a thermometer, 50.31, 50.28, 50.33, 50.30 and 50.27 °C, give q̄ = 50.298 °C, s = 0.0239 °C and
+        u(q̄) = 0.0239 / √5 = 0.0107 °C, with ν = 4 degrees of freedom.</p>
+      <p>Two points that are easy to get wrong:</p>
+      <ul>
+        <li><strong>The divisor √n applies only if you report the mean of the n readings.</strong> If the result will be a single reading, use s.</li>
+        <li><strong>Small n means few degrees of freedom.</strong> With 3 or 4 readings, s itself is very uncertain. This is why the coverage factor
+          must be increased: see <a href="../coverage-factor/">Coverage factor k and Welch–Satterthwaite</a>.</li>
+      </ul>
+      <h3>Pooled standard deviation</h3>
+      <p>Laboratories often know the repeatability of a method from earlier, larger studies. EA-4/02 uses this in its worked examples: a
+        standard deviation s<sub>p</sub> determined once from many measurements, and a routine calibration with only n = 3 readings. The standard
+        uncertainty is then s<sub>p</sub> / √n, and the degrees of freedom are those of the study that produced s<sub>p</sub>, not n − 1.</p>
+
+      <h2>Type B: from what you know</h2>
+      <p>For Type B you choose a probability distribution that matches your knowledge of the quantity, then divide by the matching factor.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>What you know</th><th>Distribution</th><th>Standard uncertainty</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Expanded uncertainty U with coverage factor k (calibration certificate)</td><td>Normal</td><td>u = U / k</td></tr>
+          <tr><td>Only limits ±a; any value between them equally likely</td><td>Rectangular</td><td>u = a / √3 ≈ 0.577 a</td></tr>
+          <tr><td>Limits ±a; values near the centre more likely than near the limits</td><td>Triangular</td><td>u = a / √6 ≈ 0.408 a</td></tr>
+          <tr><td>Limits ±a; values near the limits more likely (e.g. a quantity oscillating between them)</td><td>U-shaped (arcsine)</td><td>u = a / √2 ≈ 0.707 a</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>Calibration certificates</h3>
+      <p>A certificate that says <em>U = 0.10 °C, k = 2</em> gives u = 0.050 °C. If a certificate states a coverage probability (for example
+        95 %) and no k, it is usually based on a normal distribution, and you divide by the k that corresponds to that probability. Never
+        put the certificate U straight into the budget.</p>
+
+      <h3>Specifications and tolerances: rectangular</h3>
+      <p>A manufacturer specification such as "accuracy ±0.2 % of reading", or the maximum permissible error of a class, tells you only the
+        limits. Without other information, the rectangular distribution is the standard, conservative choice: u = a / √3.</p>
+
+      <h3>Resolution</h3>
+      <p>A digital display with a step of 0.1 °C shows 50.3 for any true value between 50.25 and 50.35. The half-width is a = 0.05 °C,
+        and with a rectangular distribution u = 0.05 / √3 = 0.029 °C. A common mistake is to use the full step (0.1) as a, which doubles
+        the contribution.</p>
+
+      <h3>Triangular</h3>
+      <p>Use it when you have good reason to think values near the centre are more likely, for example when a quantity is the difference
+        of two rectangular ones, or when experience shows that drift rarely reaches its limit. EA-4/02 uses triangular distributions in some
+        of its worked examples. It gives a smaller u than the rectangular one, so be ready to justify it.</p>
+
+      <h3>U-shaped</h3>
+      <p>Typical for quantities that swing between two limits, such as a temperature controlled by an on/off regulator, or mismatch
+        effects in RF power measurement. The quantity spends most of its time near the limits, so u is larger: a / √2.</p>
+
+      <h2>Degrees of freedom for Type B</h2>
+      <p>A Type B estimate is usually treated as having infinite degrees of freedom: you assume the limits are known exactly. If you are
+        unsure of the limits themselves, the GUM gives a way to assign a finite ν from your relative doubt about u. In practice most budgets
+        use ν = ∞ for Type B rows and only Type A rows bring finite degrees of freedom into the
+        <a href="../coverage-factor/">Welch–Satterthwaite calculation</a>.</p>
+
+      <div class="note">
+        <p><strong>Quick check.</strong> For the same limits ±a, the order is always U-shaped &gt; rectangular &gt; triangular. If your choice of
+          distribution decides whether an instrument passes or fails, write down why you chose it.</p>
+      </div>
+      <p>Back to the full method: <a href="../uncertainty-budget/">How to make a measurement uncertainty budget</a>.</p>
+    </article>
+
+    <aside class="cta">
+      <p><strong>Try it with your own numbers.</strong> The free Metroloom calculator builds the budget, finds k with Welch–Satterthwaite
+        and checks conformity with the decision rule you choose. Nothing you type leaves your browser.</p>
+      <a class="btn primary" href="../../?example=thermometer#budget">Open this example in the calculator</a>
+    </aside>
+
+    <nav class="related" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul>
+        <li><a href="../uncertainty-budget/">How to make a measurement uncertainty budget, step by step</a></li>
+        <li><a href="../coverage-factor/">Coverage factor k and the Welch–Satterthwaite formula</a></li>
+        <li><a href="../decision-rules/">Decision rules: simple acceptance, guard bands and ILAC G8</a></li>
+        <li><a href="../tur/">Test uncertainty ratio (TUR): what 4:1 really means</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../../privacy.html">Privacy</a> · <a href="../../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>

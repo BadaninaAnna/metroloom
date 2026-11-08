@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ILAC G8 decision rules: simple acceptance vs guard bands, with examples — Metroloom</title>
+  <meta name="description" content="How to state conformity with a specification when the measurement has uncertainty. Simple acceptance, guarded acceptance (w = U), the pass / conditional pass / conditional fail / fail statements, and what ISO/IEC 17025 requires.">
+  <link rel="canonical" href="https://metroloom.net/guides/decision-rules/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="ILAC G8 decision rules: simple acceptance vs guard bands, with examples — Metroloom">
+  <meta property="og:description" content="How to state conformity with a specification when the measurement has uncertainty. Simple acceptance, guarded acceptance (w = U), the pass / conditional pass / conditional fail / fail statements, and what ISO/IEC 17025 requires.">
+  <meta property="og:url" content="https://metroloom.net/guides/decision-rules/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Decision rules: simple acceptance, guard bands and ILAC G8","description":"How to state conformity with a specification when the measurement has uncertainty. Simple acceptance, guarded acceptance (w = U), the pass / conditional pass / conditional fail / fail statements, and what ISO/IEC 17025 requires.","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","name":"Anna Badanina","description":"MSc in Metrology and Information-Measuring Technology"},"publisher":{"@type":"Organization","name":"Metroloom","url":"https://metroloom.net"},"mainEntityOfPage":"https://metroloom.net/guides/decision-rules/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Metroloom","item":"https://metroloom.net/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://metroloom.net/guides/"},{"@type":"ListItem","position":3,"name":"Decision rules: simple acceptance, guard bands and ILAC G8","item":"https://metroloom.net/guides/decision-rules/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../">Calculator</a>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Metroloom</a> › <a href="../">Guides</a></nav>
+    <article>
+      <h1>Decision rules: simple acceptance, guard bands and ILAC G8</h1>
+      <p class="byline">By Anna Badanina, MSc in Metrology and Information-Measuring Technology · 8 November 2026</p>
+      <p>A customer sends a thermometer with a tolerance of ±0.5 °C. You measure an error of 0.40 °C with an expanded uncertainty of
+        0.16 °C. Does it conform? The measured value is inside the tolerance, but the true error could be up to 0.56 °C. The answer depends
+        on the <strong>decision rule</strong>: the agreed rule that says how measurement uncertainty is taken into account when you state
+        conformity.</p>
+
+      <h2>What ISO/IEC 17025 requires</h2>
+      <p>ISO/IEC 17025:2017 requires that, when a customer asks for a statement of conformity, the decision rule is clearly defined and agreed
+        with the customer (clause 7.1.3), and that the report identifies the rule that was applied (clause 7.8.6). ILAC G8:09/2019,
+        <em>Guidelines on Decision Rules and Statements of Conformity</em>, describes the common rules and how to report them. The choice of rule
+        is a decision about risk, and it belongs to the laboratory and its customer.</p>
+
+      <h2>The guard band idea</h2>
+      <p>Every rule works with an <strong>acceptance limit</strong> that may differ from the tolerance limit by a guard band w:</p>
+      <div class="formula">acceptance limit = tolerance limit − w &nbsp;&nbsp;(for an upper limit)</div>
+      <ul>
+        <li><strong>Simple acceptance</strong> (also called shared risk): w = 0. The item is accepted when the measured value is within the
+          tolerance.</li>
+        <li><strong>Guarded acceptance</strong>: w &gt; 0, often w = U. The item is accepted only if the measured value is inside the narrower
+          acceptance zone. This protects the customer from accepting items that are actually out of tolerance.</li>
+        <li><strong>Guarded rejection</strong>: the guard band lies outside the tolerance. An item is rejected only when it is clearly out of
+          tolerance. Used when a false rejection is the more expensive mistake.</li>
+      </ul>
+
+      <h2>What the risk looks like</h2>
+      <p>With a normal distribution, the probability that the true value lies within the tolerance can be calculated from the measured value,
+        the limits and the standard uncertainty. Two cases are worth remembering:</p>
+      <ul>
+        <li>With simple acceptance, a measured value exactly on the limit has only a 50 % probability of conformance. Items close to the limit
+          are accepted with a high risk.</li>
+        <li>With guarded acceptance and w = U at k = 2, a value on the acceptance limit lies 2 standard uncertainties from the tolerance limit.
+          The probability that it is actually out of tolerance is about 2.3 % (for large ν<sub>eff</sub> and one limit).</li>
+      </ul>
+
+      <h2>Worked example: thermometer, tolerance ±0.5 °C, U = 0.16 °C</h2>
+      <p>The budget from <a href="../uncertainty-budget/">the step-by-step guide</a> gives u<sub>c</sub> = 0.080 °C and U = 0.16 °C (k = 2).
+        With guarded acceptance (w = U), the acceptance zone is ±0.34 °C.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th class="num">Measured error</th><th>Statement (interval ± U)</th><th class="num">Probability of conformance</th><th>Simple acceptance</th><th>Guarded acceptance, w = U</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">0.30 °C</td><td>Pass</td><td class="num">99.4 %</td><td>Accept</td><td>Accept</td></tr>
+          <tr><td class="num">0.40 °C</td><td>Conditional pass</td><td class="num">89.4 %</td><td>Accept</td><td>Do not accept</td></tr>
+          <tr><td class="num">0.55 °C</td><td>Conditional fail</td><td class="num">26.6 %</td><td>Reject</td><td>Reject</td></tr>
+          <tr><td class="num">0.70 °C</td><td>Fail</td><td class="num">0.6 %</td><td>Reject</td><td>Reject</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The interesting row is 0.40 °C. Under simple acceptance the thermometer passes, although there is a roughly 1 in 10 chance that its
+        true error is outside the tolerance. Under guarded acceptance it does not pass. Neither answer is "right". They reflect different agreements
+        about who carries the risk.</p>
+
+      <h2>The four statements</h2>
+      <p>ILAC G8 describes non-binary statements that tell the customer more than a plain yes or no. Metroloom labels results by where the
+        interval measured value ± U lies:</p>
+      <ul>
+        <li><strong>Pass</strong>: the measured value and the whole interval are within the tolerance.</li>
+        <li><strong>Conditional pass</strong>: the measured value is within the tolerance, but the interval crosses a limit.</li>
+        <li><strong>Conditional fail</strong>: the measured value is outside the tolerance, but the interval reaches into it.</li>
+        <li><strong>Fail</strong>: the measured value and the whole interval are outside the tolerance.</li>
+      </ul>
+      <p>The "conditional" statements are exactly the cases where the decision rule matters.</p>
+
+      <h2>How to choose a rule</h2>
+      <ul>
+        <li><strong>What does a wrong acceptance cost?</strong> Safety-relevant or legal measurements usually justify guarded acceptance.</li>
+        <li><strong>How large is U compared to the tolerance?</strong> If U is small (a high <a href="../tur/">test uncertainty ratio</a>), the
+          difference between the rules affects few items.</li>
+        <li><strong>Is there a requirement already?</strong> Some product standards, regulations and customer contracts define the rule. Follow it.</li>
+      </ul>
+      <div class="note">
+        <p><strong>Who decides.</strong> A calculator can show the statement and the probability for the inputs and rule you give it. The rule itself,
+          and the conformity decision, are agreed between the laboratory and its customer. In Metroloom you choose the rule and record your own
+          decision.</p>
+      </div>
+    </article>
+
+    <aside class="cta">
+      <p><strong>Try it with your own numbers.</strong> The free Metroloom calculator builds the budget, finds k with Welch–Satterthwaite
+        and checks conformity with the decision rule you choose. Nothing you type leaves your browser.</p>
+      <a class="btn primary" href="../../?example=thermometer#budget">Open this example in the calculator</a>
+    </aside>
+
+    <nav class="related" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul>
+        <li><a href="../uncertainty-budget/">How to make a measurement uncertainty budget, step by step</a></li>
+        <li><a href="../type-a-type-b/">Type A and Type B uncertainty: which divisor to use</a></li>
+        <li><a href="../coverage-factor/">Coverage factor k and the Welch–Satterthwaite formula</a></li>
+        <li><a href="../tur/">Test uncertainty ratio (TUR): what 4:1 really means</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../../privacy.html">Privacy</a> · <a href="../../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>

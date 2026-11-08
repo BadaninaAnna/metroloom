@@ -571,6 +571,34 @@ if (!setupLink('waitlist-link', CONFIG.waitlistFormUrl, 'waitlist-clicked')) {
 }
 initAnalytics();
 
+// Guides link to the calculator with ?example=<id> to open their worked example.
+(function openExampleFromUrl() {
+  let params;
+  try {
+    params = new URLSearchParams(location.search);
+  } catch {
+    return;
+  }
+  const ex = EXAMPLES.find((x) => x.id === params.get('example'));
+  if (!ex) return;
+  // Ask only if the visitor has their own budget: not empty, not an unchanged example.
+  const fieldsOf = (st) => JSON.stringify(st.rows.map((r) => [r.name, r.method, r.fields, r.sensitivity]));
+  const current = fieldsOf(state);
+  const isExample = EXAMPLES.some((x) => fieldsOf(stateFromExample(x)) === current);
+  const hasWork = state.rows.some((r) => r.name || Object.values(r.fields).some((v) => !isBlank(v)));
+  const isSame = fieldsOf(stateFromExample(ex)) === current;
+  if (!isSame && (!hasWork || isExample || window.confirm(`Open the example "${ex.title}"? It replaces your current budget.`))) {
+    state = stateFromExample(ex);
+    saveState();
+    track(`guide-example-${ex.id}`);
+  }
+  try {
+    history.replaceState(null, '', location.pathname + location.hash);
+  } catch {
+    /* address bar cleanup is optional */
+  }
+})();
+
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);

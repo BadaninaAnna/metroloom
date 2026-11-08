@@ -16,6 +16,17 @@ export const EXAMPLES = [
     conformity: { value: '0.30', lower: '-0.5', upper: '0.5' },
   },
   {
+    id: 'micrometer',
+    title: 'Micrometer, 4 readings (small sample)',
+    measurand: 'Diameter of a 10 mm pin measured with a digital micrometer',
+    unit: 'mm',
+    rows: [
+      { name: 'Repeatability (4 readings)', method: 'typeA', fields: { readings: '10.012 10.018 10.009 10.015' } },
+      { name: 'Micrometer calibration (certificate)', method: 'normal', fields: { expanded: '0.004', k: '2' } },
+      { name: 'Resolution of the micrometer (0.001 mm)', method: 'rectangular', fields: { halfWidth: '0.0005' } },
+    ],
+  },
+  {
     id: 'ea402-s2',
     title: 'EA-4/02 S2: weight 10 kg (mg)',
     measurand: 'Conventional mass of a 10 kg weight (deviation from reference)',

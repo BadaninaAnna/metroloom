@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test uncertainty ratio (TUR): what 4:1 means and how to calculate it — Metroloom</title>
+  <meta name="description" content="How to calculate the test uncertainty ratio, how it differs from the older test accuracy ratio (TAR), why 4:1 became the rule of thumb, and why a high TUR does not make results near the tolerance limit safe.">
+  <link rel="canonical" href="https://metroloom.net/guides/tur/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="Test uncertainty ratio (TUR): what 4:1 means and how to calculate it — Metroloom">
+  <meta property="og:description" content="How to calculate the test uncertainty ratio, how it differs from the older test accuracy ratio (TAR), why 4:1 became the rule of thumb, and why a high TUR does not make results near the tolerance limit safe.">
+  <meta property="og:url" content="https://metroloom.net/guides/tur/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Test uncertainty ratio (TUR): what 4:1 really means","description":"How to calculate the test uncertainty ratio, how it differs from the older test accuracy ratio (TAR), why 4:1 became the rule of thumb, and why a high TUR does not make results near the tolerance limit safe.","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","name":"Anna Badanina","description":"MSc in Metrology and Information-Measuring Technology"},"publisher":{"@type":"Organization","name":"Metroloom","url":"https://metroloom.net"},"mainEntityOfPage":"https://metroloom.net/guides/tur/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Metroloom","item":"https://metroloom.net/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://metroloom.net/guides/"},{"@type":"ListItem","position":3,"name":"Test uncertainty ratio (TUR): what 4:1 really means","item":"https://metroloom.net/guides/tur/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../">Calculator</a>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Metroloom</a> › <a href="../">Guides</a></nav>
+    <article>
+      <h1>Test uncertainty ratio (TUR): what 4:1 really means</h1>
+      <p class="byline">By Anna Badanina, MSc in Metrology and Information-Measuring Technology · 8 November 2026</p>
+      <p>The test uncertainty ratio compares the width of a tolerance with the uncertainty of the measurement used to check it. It answers a
+        simple question: <em>is my measurement good enough for this tolerance?</em></p>
+
+      <h2>How to calculate TUR</h2>
+      <p>The usual definition divides the tolerance span by twice the expanded uncertainty at about 95 % coverage:</p>
+      <div class="formula">TUR = (upper limit − lower limit) / (2 · U)</div>
+      <p>For a symmetric tolerance ±T this is simply T / U. In the thermometer example from the other guides, the tolerance is ±0.5 °C and
+        U = 0.16 °C:</p>
+      <div class="formula">TUR = 1.0 / (2 × 0.16) = 3.1</div>
+      <p>U here is the uncertainty of the whole calibration process, from the full budget: reference standard, environment, resolution,
+        repeatability. It is not just the accuracy of the reference.</p>
+
+      <h2>TUR is not TAR</h2>
+      <p>The older <strong>test accuracy ratio</strong> (TAR) compared the specified accuracy of the device under test with the specified accuracy
+        of the reference standard. It ignores everything else in the budget. A 10 : 1 TAR can hide a TUR of 3 : 1 once bath gradients,
+        resolution and repeatability are counted. When someone quotes a ratio, ask which one it is.</p>
+
+      <h2>Where 4 : 1 comes from</h2>
+      <p>A ratio of 4 : 1 became the common rule of thumb in calibration, carried by military and industry standards for decades. It was a
+        practical way to keep the risk of wrong decisions low without calculating it. ANSI/NCSL Z540.3 (2006) moved the focus to the risk
+        itself: it limits the probability of false acceptance to 2 %, and accepts a TUR of at least 4 : 1 as an alternative where that probability
+        is not calculated.</p>
+
+      <h2>Why a high TUR does not make every result safe</h2>
+      <p>A high TUR keeps the <em>average</em> risk across many items low. It says nothing about an individual result close to the limit. A
+        value measured exactly on the tolerance limit has a 50 % probability of being out of tolerance, whatever the TUR. What TUR changes is how
+        wide the risky zone near the limits is.</p>
+      <p>With guarded acceptance and w = U, the acceptance zone is the tolerance minus U on each side. Its width as a share of the tolerance
+        follows directly from TUR:</p>
+      <div class="formula">acceptance zone / tolerance = 1 − 1 / TUR</div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th class="num">TUR</th><th class="num">U as share of T</th><th class="num">Acceptance zone with w = U</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">10 : 1</td><td class="num">10 %</td><td class="num">90 % of the tolerance</td></tr>
+          <tr><td class="num">4 : 1</td><td class="num">25 %</td><td class="num">75 %</td></tr>
+          <tr><td class="num">3 : 1</td><td class="num">33 %</td><td class="num">67 %</td></tr>
+          <tr><td class="num">2 : 1</td><td class="num">50 %</td><td class="num">50 %</td></tr>
+          <tr><td class="num">1 : 1</td><td class="num">100 %</td><td class="num">0 %: nothing can be accepted</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>At 4 : 1, a quarter of each half of the tolerance is a zone where the result is conditional. At 2 : 1, half of it is. That is the
+        practical meaning of a low TUR: many results end up as <em>conditional pass</em> or <em>conditional fail</em>, and the decision rule decides
+        their fate (see <a href="../decision-rules/">decision rules and guard bands</a>).</p>
+
+      <h2>What to do when TUR is low</h2>
+      <ul>
+        <li><strong>Look at the budget, not just the reference.</strong> The share column of the budget shows which source dominates. Often it is
+          the environment or the fixture, not the standard (see <a href="../uncertainty-budget/">the budget guide</a>).</li>
+        <li><strong>Reduce the largest contribution</strong>: a better reference, a more stable bath, more readings to lower the Type A part.</li>
+        <li><strong>Agree a decision rule</strong> with the customer that matches the risk they can accept, and report it.</li>
+        <li><strong>Report the measured value and U</strong> instead of a pass/fail statement, and let the user of the instrument apply their own
+          criteria.</li>
+      </ul>
+      <div class="note">
+        <p>In the Metroloom calculator, TUR is shown with every conformity check, next to the probability of conformance for the measured value. The
+          first tells you how good the measurement is for this tolerance; the second tells you about this particular result.</p>
+      </div>
+    </article>
+
+    <aside class="cta">
+      <p><strong>Try it with your own numbers.</strong> The free Metroloom calculator builds the budget, finds k with Welch–Satterthwaite
+        and checks conformity with the decision rule you choose. Nothing you type leaves your browser.</p>
+      <a class="btn primary" href="../../?example=thermometer#budget">Open this example in the calculator</a>
+    </aside>
+
+    <nav class="related" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul>
+        <li><a href="../uncertainty-budget/">How to make a measurement uncertainty budget, step by step</a></li>
+        <li><a href="../type-a-type-b/">Type A and Type B uncertainty: which divisor to use</a></li>
+        <li><a href="../coverage-factor/">Coverage factor k and the Welch–Satterthwaite formula</a></li>
+        <li><a href="../decision-rules/">Decision rules: simple acceptance, guard bands and ILAC G8</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../../privacy.html">Privacy</a> · <a href="../../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>

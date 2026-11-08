@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coverage factor k and Welch–Satterthwaite effective degrees of freedom — Metroloom</title>
+  <meta name="description" content="When k = 2 is not enough: how to calculate the effective degrees of freedom with the Welch–Satterthwaite formula and find the coverage factor from the t-distribution. Worked example and table of k values for 95.45 %.">
+  <link rel="canonical" href="https://metroloom.net/guides/coverage-factor/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="Coverage factor k and Welch–Satterthwaite effective degrees of freedom — Metroloom">
+  <meta property="og:description" content="When k = 2 is not enough: how to calculate the effective degrees of freedom with the Welch–Satterthwaite formula and find the coverage factor from the t-distribution. Worked example and table of k values for 95.45 %.">
+  <meta property="og:url" content="https://metroloom.net/guides/coverage-factor/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Coverage factor k and the Welch–Satterthwaite formula","description":"When k = 2 is not enough: how to calculate the effective degrees of freedom with the Welch–Satterthwaite formula and find the coverage factor from the t-distribution. Worked example and table of k values for 95.45 %.","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","name":"Anna Badanina","description":"MSc in Metrology and Information-Measuring Technology"},"publisher":{"@type":"Organization","name":"Metroloom","url":"https://metroloom.net"},"mainEntityOfPage":"https://metroloom.net/guides/coverage-factor/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Metroloom","item":"https://metroloom.net/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://metroloom.net/guides/"},{"@type":"ListItem","position":3,"name":"Coverage factor k and the Welch–Satterthwaite formula","item":"https://metroloom.net/guides/coverage-factor/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../">Calculator</a>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Metroloom</a> › <a href="../">Guides</a></nav>
+    <article>
+      <h1>Coverage factor k and the Welch–Satterthwaite formula</h1>
+      <p class="byline">By Anna Badanina, MSc in Metrology and Information-Measuring Technology · 8 November 2026</p>
+      <p>The expanded uncertainty is U = k · u<sub>c</sub>. Almost every certificate says <em>k = 2</em>, and in most calibrations that is
+        correct. But k = 2 gives a coverage probability of about 95 % only if the combined uncertainty is known well, that is, if it has many
+        degrees of freedom. When a Type A component with few readings dominates the budget, k = 2 understates U.</p>
+
+      <h2>Why the number of readings matters</h2>
+      <p>A standard deviation calculated from 4 readings is itself an uncertain estimate. To keep the same coverage probability, the
+        interval must be wider. Statistically, the coverage factor then comes from Student's t-distribution instead of the normal
+        distribution, with the degrees of freedom ν of the estimate.</p>
+
+      <h2>The Welch–Satterthwaite formula</h2>
+      <p>A budget combines several components, each with its own degrees of freedom ν<sub>i</sub> (n − 1 for Type A, usually ∞ for Type B).
+        The effective degrees of freedom of the combined uncertainty are approximated by:</p>
+      <div class="formula">ν<sub>eff</sub> = u<sub>c</sub>⁴ / Σ ( (c<sub>i</sub> · u(x<sub>i</sub>))⁴ / ν<sub>i</sub> )</div>
+      <p>Components with ν<sub>i</sub> = ∞ add nothing to the sum. The fourth powers mean that only the large components with few degrees
+        of freedom matter. If ν<sub>eff</sub> is not an integer, EA-4/02 says to round it down to the next lower integer. Then k is the
+        t-quantile for that ν and the chosen coverage probability.</p>
+
+      <h2>Worked example: micrometer with four readings</h2>
+      <p>A 10 mm pin is measured four times with a digital micrometer: 10.012, 10.018, 10.009 and 10.015 mm.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>Evaluation</th><th class="num">u(x<sub>i</sub>), mm</th><th class="num">ν<sub>i</sub></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Repeatability, 4 readings</td><td>Type A, s = 0.00387, s / √4</td><td class="num">0.00194</td><td class="num">3</td></tr>
+          <tr><td>Micrometer calibration</td><td>Normal, U = 0.004, k = 2</td><td class="num">0.00200</td><td class="num">∞</td></tr>
+          <tr><td>Resolution (0.001 mm)</td><td>Rectangular, a = 0.0005</td><td class="num">0.00029</td><td class="num">∞</td></tr>
+          <tr><th>Combined u<sub>c</sub></th><th></th><th class="num">0.00280</th><th></th></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="formula">ν<sub>eff</sub> = 0.00280⁴ / (0.00194⁴ / 3) = 13.09 → 13</div>
+      <p>For ν = 13 and 95.45 %, k = 2.21. So U = 2.21 × 0.00280 = 0.0062 mm. With k = 2 out of habit, U would have been 0.0056 mm,
+        about 10 % too small. Repeatability makes up almost half of the variance here, and three degrees of freedom are not many.</p>
+      <p>Two ways to bring k back towards 2: take more readings, or use a pooled standard deviation from an earlier repeatability study
+        with many degrees of freedom (see <a href="../type-a-type-b/">Type A and Type B uncertainty</a>).</p>
+
+      <h2>Table of coverage factors for 95.45 %</h2>
+      <p>Values of the t-distribution for a coverage probability of 95.45 %, as in GUM table G.2 and EA-4/02 table E.1:</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>ν<sub>eff</sub></th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th><th class="num">6</th><th class="num">8</th><th class="num">10</th><th class="num">20</th><th class="num">30</th><th class="num">50</th><th class="num">∞</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>k</th><td class="num">13.97</td><td class="num">4.53</td><td class="num">3.31</td><td class="num">2.87</td><td class="num">2.65</td><td class="num">2.52</td><td class="num">2.37</td><td class="num">2.28</td><td class="num">2.13</td><td class="num">2.09</td><td class="num">2.05</td><td class="num">2.00</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Beyond about 50 effective degrees of freedom, k is within 2.5 % of 2. Below 10 the difference becomes significant.</p>
+      <div class="note">
+        <p><strong>A note on EA-4/02 table E.1.</strong> While validating Metroloom we found that the table prints k = 2.24 for ν = 11. The exact
+          t-quantile is 2.2549, which rounds to 2.25 and fits between 2.28 (ν = 10) and 2.23 (ν = 12). Metroloom uses the exact value. Details in the
+          <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">validation report</a>.</p>
+      </div>
+
+      <h2>95 % or 95.45 %?</h2>
+      <p>EA-4/02 and most accredited calibration certificates use 95.45 %, the probability that corresponds exactly to k = 2 for a normal
+        distribution. Some fields use 95 %, which gives k = 1.96 for ν = ∞. The difference is small, but state on the certificate which one you
+        used, together with k.</p>
+
+      <h2>When Welch–Satterthwaite is not enough</h2>
+      <p>The formula assumes uncorrelated inputs and a combined distribution close to normal. If one rectangular component dominates the
+        budget, the combined distribution is closer to rectangular than normal, and the t-based k can be too large. For such cases, and for
+        strongly non-linear models, the Monte Carlo method of GUM Supplement 1 (JCGM 101:2008) gives a more reliable interval.</p>
+      <p>See the full budget method in <a href="../uncertainty-budget/">How to make a measurement uncertainty budget</a>.</p>
+    </article>
+
+    <aside class="cta">
+      <p><strong>Try it with your own numbers.</strong> The free Metroloom calculator builds the budget, finds k with Welch–Satterthwaite
+        and checks conformity with the decision rule you choose. Nothing you type leaves your browser.</p>
+      <a class="btn primary" href="../../?example=micrometer#budget">Open this example in the calculator</a>
+    </aside>
+
+    <nav class="related" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul>
+        <li><a href="../uncertainty-budget/">How to make a measurement uncertainty budget, step by step</a></li>
+        <li><a href="../type-a-type-b/">Type A and Type B uncertainty: which divisor to use</a></li>
+        <li><a href="../decision-rules/">Decision rules: simple acceptance, guard bands and ILAC G8</a></li>
+        <li><a href="../tur/">Test uncertainty ratio (TUR): what 4:1 really means</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../../privacy.html">Privacy</a> · <a href="../../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>

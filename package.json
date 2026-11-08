@@ -5,6 +5,7 @@
   "type": "module",
   "description": "GUM uncertainty budget and conformity assessment engine",
   "scripts": {
+    "build:guides": "node scripts/build-guides.mjs",
     "test": "node --test \"test/**/*.test.js\""
   }
 }

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to make a measurement uncertainty budget (step by step, with example) — Metroloom</title>
+  <meta name="description" content="A practical seven-step method to build a GUM uncertainty budget: model, sources, standard uncertainties, sensitivity coefficients, combined and expanded uncertainty. Worked example for a thermometer calibration.">
+  <link rel="canonical" href="https://metroloom.net/guides/uncertainty-budget/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="How to make a measurement uncertainty budget (step by step, with example) — Metroloom">
+  <meta property="og:description" content="A practical seven-step method to build a GUM uncertainty budget: model, sources, standard uncertainties, sensitivity coefficients, combined and expanded uncertainty. Worked example for a thermometer calibration.">
+  <meta property="og:url" content="https://metroloom.net/guides/uncertainty-budget/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to make a measurement uncertainty budget, step by step","description":"A practical seven-step method to build a GUM uncertainty budget: model, sources, standard uncertainties, sensitivity coefficients, combined and expanded uncertainty. Worked example for a thermometer calibration.","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Person","name":"Anna Badanina","description":"MSc in Metrology and Information-Measuring Technology"},"publisher":{"@type":"Organization","name":"Metroloom","url":"https://metroloom.net"},"mainEntityOfPage":"https://metroloom.net/guides/uncertainty-budget/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Metroloom","item":"https://metroloom.net/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://metroloom.net/guides/"},{"@type":"ListItem","position":3,"name":"How to make a measurement uncertainty budget, step by step","item":"https://metroloom.net/guides/uncertainty-budget/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../../">Calculator</a>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Metroloom</a> › <a href="../">Guides</a></nav>
+    <article>
+      <h1>How to make a measurement uncertainty budget, step by step</h1>
+      <p class="byline">By Anna Badanina, MSc in Metrology and Information-Measuring Technology · 8 November 2026</p>
+      <p>An uncertainty budget is a table that lists every significant source of uncertainty in a measurement, converts each one to a
+        standard uncertainty, and combines them into one number: the expanded uncertainty <em>U</em> you put on the certificate.
+        The method is defined in JCGM 100:2008, the <em>Guide to the expression of uncertainty in measurement</em> (GUM). EA-4/02 M
+        applies it to calibration.</p>
+      <p>This guide walks through the seven steps with one running example: the calibration of a digital thermometer at 50 °C in a
+        liquid bath against a reference thermometer.</p>
+
+      <h2>Step 1. Define the measurand and the model</h2>
+      <p>Write down exactly what you are reporting and how it is calculated from the quantities you measure or know. For the
+        thermometer, the measurand is the error of the indication:</p>
+      <div class="formula">E = t<sub>ix</sub> − t<sub>S</sub> + δt<sub>D</sub> + δt<sub>bath</sub> + δt<sub>res</sub></div>
+      <p>where t<sub>ix</sub> is the mean indication of the thermometer under test, t<sub>S</sub> is the temperature of the reference
+        thermometer, and the δ terms are corrections whose best estimate is zero but whose value is not exactly known: drift of the
+        reference since its calibration, inhomogeneity of the bath and the resolution of the display. Writing the model first prevents the
+        two most common errors in budgets: forgetting a source, and counting one twice.</p>
+
+      <h2>Step 2. List the sources of uncertainty</h2>
+      <p>Each input quantity of the model is a row of the budget. Typical sources in calibration are the reference standard (from its
+        certificate), its drift, environmental conditions, the resolution of the device under test and repeatability. In the example:</p>
+      <ul>
+        <li>Reference thermometer: certificate states U = 0.10 °C with k = 2.</li>
+        <li>Drift of the reference between calibrations: within ±0.05 °C, from its calibration history.</li>
+        <li>Bath inhomogeneity: within ±0.08 °C, from a bath characterisation.</li>
+        <li>Resolution of the thermometer under test: 0.1 °C, so the reading is within ±0.05 °C of the indicated value.</li>
+        <li>Repeatability: five readings, 50.31, 50.28, 50.33, 50.30 and 50.27 °C.</li>
+      </ul>
+
+      <h2>Step 3. Convert each source to a standard uncertainty u(x<sub>i</sub>)</h2>
+      <p>Every row must be expressed as a standard uncertainty, the equivalent of one standard deviation. How you get there depends on
+        what you know about the source. This is the difference between Type A and Type B evaluation, explained in detail in
+        <a href="../type-a-type-b/">Type A and Type B uncertainty</a>:</p>
+      <ul>
+        <li><strong>Certificate value</strong> (normal distribution): divide U by its k. 0.10 / 2 = 0.050 °C.</li>
+        <li><strong>Limits ±a with no further knowledge</strong> (rectangular distribution): divide a by √3. Drift: 0.05 / √3 = 0.029 °C;
+          bath: 0.08 / √3 = 0.046 °C; resolution: 0.05 / √3 = 0.029 °C.</li>
+        <li><strong>Repeated readings</strong> (Type A): the experimental standard deviation s = 0.0239 °C. Because the result is the mean of
+          n = 5 readings, the standard uncertainty is s / √n = 0.0107 °C, with ν = n − 1 = 4 degrees of freedom.</li>
+      </ul>
+
+      <h2>Step 4. Find the sensitivity coefficients c<sub>i</sub></h2>
+      <p>A sensitivity coefficient tells you how much the result changes when an input changes by one unit. It is the partial derivative
+        of the model with respect to that input. It also converts units: if an input is in ohms and the result in volts, c<sub>i</sub> is in
+        volts per ohm. In the thermometer model every term enters with a factor of 1 (or −1), so all c<sub>i</sub> have magnitude 1. When an input
+        enters a product or a power, c<sub>i</sub> is no longer 1, and forgetting it is a frequent source of wrong budgets.</p>
+
+      <h2>Step 5. Combine: the combined standard uncertainty u<sub>c</sub></h2>
+      <p>For uncorrelated inputs, the contributions c<sub>i</sub>·u(x<sub>i</sub>) add as a root sum of squares:</p>
+      <div class="formula">u<sub>c</sub>(y) = √( Σ (c<sub>i</sub> · u(x<sub>i</sub>))² )</div>
+      <p>The full budget for the example:</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>Evaluation</th><th class="num">u(x<sub>i</sub>), °C</th><th class="num">ν<sub>i</sub></th><th class="num">Share of u<sub>c</sub>²</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reference thermometer</td><td>Normal, U = 0.10, k = 2</td><td class="num">0.0500</td><td class="num">∞</td><td class="num">39.0 %</td></tr>
+          <tr><td>Drift of reference</td><td>Rectangular, a = 0.05</td><td class="num">0.0289</td><td class="num">∞</td><td class="num">13.0 %</td></tr>
+          <tr><td>Bath inhomogeneity</td><td>Rectangular, a = 0.08</td><td class="num">0.0462</td><td class="num">∞</td><td class="num">33.3 %</td></tr>
+          <tr><td>Resolution (0.1 °C)</td><td>Rectangular, a = 0.05</td><td class="num">0.0289</td><td class="num">∞</td><td class="num">13.0 %</td></tr>
+          <tr><td>Repeatability, 5 readings</td><td>Type A, s / √5</td><td class="num">0.0107</td><td class="num">4</td><td class="num">1.8 %</td></tr>
+          <tr><th>Combined standard uncertainty u<sub>c</sub></th><th></th><th class="num">0.0801</th><th></th><th class="num">100 %</th></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The share column is where the budget earns its keep. Here the reference thermometer and the bath make up 72 % of the variance.
+        Improving the repeatability, which is 1.8 %, would change almost nothing. Buying a better reference or characterising the bath
+        more carefully would.</p>
+
+      <h2>Step 6. Choose the coverage factor k</h2>
+      <p>The expanded uncertainty is U = k · u<sub>c</sub>. For a coverage probability of about 95 %, k = 2 is correct only when the combined
+        uncertainty has many effective degrees of freedom. You check this with the Welch–Satterthwaite formula. In the example, the only
+        source with finite degrees of freedom is repeatability, and it is small, so ν<sub>eff</sub> is very large (above 10 000) and k = 2.00.
+        When a Type A component dominates and n is small, k can be noticeably larger than 2: see
+        <a href="../coverage-factor/">Coverage factor k and Welch–Satterthwaite</a>.</p>
+
+      <h2>Step 7. Calculate and report the expanded uncertainty</h2>
+      <div class="formula">U = k · u<sub>c</sub> = 2.00 × 0.0801 °C = 0.160 °C</div>
+      <p>EA-4/02 recommends giving the uncertainty with at most two significant digits, and the result rounded to the same decimal place.
+        The certificate line would read: <em>error of indication E = 0.30 °C, U = 0.16 °C (k = 2, coverage probability approximately 95 %)</em>.
+        The statement of k and the coverage probability is part of the result, not decoration.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li><strong>Using the certificate U as a standard uncertainty.</strong> U from a certificate must be divided by its k before it goes into
+          the budget.</li>
+        <li><strong>s or s / √n?</strong> Divide by √n only when the reported result is the mean of those n readings. If the customer will use a
+          single reading in practice, the repeatability contribution is s itself.</li>
+        <li><strong>Ignoring sensitivity coefficients</strong> when inputs are in different units or enter the model non-linearly.</li>
+        <li><strong>Counting the same effect twice</strong>, for example the resolution of the device and a repeatability study that already
+          includes the scatter caused by that resolution. Whether to keep both is a judgement you should document.</li>
+        <li><strong>Assuming k = 2 without checking</strong> the effective degrees of freedom.</li>
+      </ul>
+      <p>Once you have U, the next question is usually whether the instrument meets its specification. That is a separate decision with its
+        own rules: see <a href="../decision-rules/">ILAC G8 decision rules</a>.</p>
+    </article>
+
+    <aside class="cta">
+      <p><strong>Try it with your own numbers.</strong> The free Metroloom calculator builds the budget, finds k with Welch–Satterthwaite
+        and checks conformity with the decision rule you choose. Nothing you type leaves your browser.</p>
+      <a class="btn primary" href="../../?example=thermometer#budget">Open this example in the calculator</a>
+    </aside>
+
+    <nav class="related" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul>
+        <li><a href="../type-a-type-b/">Type A and Type B uncertainty: which divisor to use</a></li>
+        <li><a href="../coverage-factor/">Coverage factor k and the Welch–Satterthwaite formula</a></li>
+        <li><a href="../decision-rules/">Decision rules: simple acceptance, guard bands and ILAC G8</a></li>
+        <li><a href="../tur/">Test uncertainty ratio (TUR): what 4:1 really means</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../../privacy.html">Privacy</a> · <a href="../../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>

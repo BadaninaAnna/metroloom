@@ -31,6 +31,13 @@ Coverage factors are checked against GUM table G.2 and EA-4/02 table E.1. The
 budgets are validated against the worked examples S2–S4 of EA-4/02 M:2022 — see
 [docs/VALIDATION.md](docs/VALIDATION.md).
 
+The guides in `guides/` are generated from `content/guides/*.html`, together with
+`sitemap.xml`. After editing a guide, rebuild them:
+
+```
+npm run build:guides
+```
+
 ## Author
 
 Anna Badanina — MSc in Metrology and Information-Measuring Technology.

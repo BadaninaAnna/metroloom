@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Measurement uncertainty guides — Metroloom</title>
+  <meta name="description" content="Practical guides to measurement uncertainty: budgets, Type A and Type B evaluation, coverage factor and Welch–Satterthwaite, ILAC G8 decision rules and TUR. With worked examples.">
+  <link rel="canonical" href="https://metroloom.net/guides/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Metroloom">
+  <meta property="og:title" content="Measurement uncertainty guides — Metroloom">
+  <meta property="og:description" content="Practical guides to measurement uncertainty: budgets, Type A and Type B evaluation, coverage factor and Welch–Satterthwaite, ILAC G8 decision rules and TUR. With worked examples.">
+  <meta property="og:url" content="https://metroloom.net/guides/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Measurement uncertainty guides","description":"Practical guides to measurement uncertainty: budgets, Type A and Type B evaluation, coverage factor and Welch–Satterthwaite, ILAC G8 decision rules and TUR. With worked examples.","url":"https://metroloom.net/guides/","hasPart":[{"@type":"Article","headline":"How to make a measurement uncertainty budget, step by step","url":"https://metroloom.net/guides/uncertainty-budget/"},{"@type":"Article","headline":"Type A and Type B uncertainty: which divisor to use","url":"https://metroloom.net/guides/type-a-type-b/"},{"@type":"Article","headline":"Coverage factor k and the Welch–Satterthwaite formula","url":"https://metroloom.net/guides/coverage-factor/"},{"@type":"Article","headline":"Decision rules: simple acceptance, guard bands and ILAC G8","url":"https://metroloom.net/guides/decision-rules/"},{"@type":"Article","headline":"Test uncertainty ratio (TUR): what 4:1 really means","url":"https://metroloom.net/guides/tur/"}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../">Calculator</a>
+        <a href="../guides/" aria-current="page">Guides</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap doc">
+    <h1>Measurement uncertainty guides</h1>
+    <p class="lead">Short, practical explanations of the methods behind the calculator, each with a worked example you can open and change.
+      Written by a metrologist, based on JCGM 100:2008 (GUM), EA-4/02 M:2022 and ILAC G8:09/2019.</p>
+    <ul class="guide-list">
+      <li>
+        <a href="uncertainty-budget/"><strong>How to make a measurement uncertainty budget, step by step</strong></a>
+        <span>The seven steps from the measurement model to the reported U, with a complete worked example for a digital thermometer at 50 °C.</span>
+      </li>
+      <li>
+        <a href="type-a-type-b/"><strong>Type A and Type B uncertainty: which divisor to use</strong></a>
+        <span>Turning readings, certificates and ± limits into standard uncertainties: s/√n, U/k, and the √3, √6 and √2 divisors.</span>
+      </li>
+      <li>
+        <a href="coverage-factor/"><strong>Coverage factor k and the Welch–Satterthwaite formula</strong></a>
+        <span>Why k = 2 can underestimate U with few readings, how to calculate νeff, and a table of k values for 95.45 %.</span>
+      </li>
+      <li>
+        <a href="decision-rules/"><strong>Decision rules: simple acceptance, guard bands and ILAC G8</strong></a>
+        <span>Simple acceptance vs guarded acceptance, the four ILAC G8 statements, false-accept risk, and what ISO/IEC 17025 asks for.</span>
+      </li>
+      <li>
+        <a href="tur/"><strong>Test uncertainty ratio (TUR): what 4:1 really means</strong></a>
+        <span>How to calculate TUR, TUR vs TAR, where 4:1 comes from, and why TUR alone does not protect results near the limit.</span>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> These guides explain published methods for learning purposes. They are not professional metrological advice;
+        you remain responsible for your budgets and conformity decisions. See the <a href="../terms.html">terms of use</a>.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a> ·
+        <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+</body>
+</html>
