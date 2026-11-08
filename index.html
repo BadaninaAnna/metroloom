@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metroloom — Measurement Uncertainty Budget Calculator</title>
+  <meta name="description" content="Free GUM uncertainty budget calculator with conformity assessment (ILAC G8 decision rules, guard bands). Validated against EA-4/02 worked examples. Runs in your browser — no data is sent.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="assets/favicon.svg#mark"/></svg>
+        <span>Metroloom</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="#budget">Budget</a>
+        <a href="#conformity">Conformity</a>
+        <a href="https://github.com/BadaninaAnna/metroloom/blob/main/docs/VALIDATION.md">Validation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>Measurement uncertainty budget</h1>
+      <p class="lead">Build a GUM uncertainty budget, then check conformity against your tolerance with the decision rule you choose.
+        Validated against the worked examples of EA-4/02. Everything runs in your browser — no data leaves your computer.</p>
+      <div class="print-only print-meta" id="print-meta"></div>
+    </section>
+
+    <!-- ============ 1. Budget ============ -->
+    <section id="budget" class="card">
+      <div class="card-head">
+        <h2><span class="step">1</span> Uncertainty budget</h2>
+        <div class="toolbar no-print">
+          <label class="inline">Example
+            <select id="example-select">
+              <option value="">Load an example…</option>
+            </select>
+          </label>
+          <button type="button" class="btn ghost" id="clear-btn">Clear</button>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <label>Measurand
+          <input type="text" id="measurand" placeholder="e.g. Error of thermometer at 50 °C">
+        </label>
+        <label>Unit of the result
+          <input type="text" id="unit" placeholder="e.g. °C, mg, mΩ">
+        </label>
+        <label>Coverage probability
+          <select id="coverage">
+            <option value="0.9545">95.45 % (k = 2 for ν = ∞)</option>
+            <option value="0.95">95 %</option>
+            <option value="0.9973">99.73 % (k = 3 for ν = ∞)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="table-scroll">
+        <table class="budget" id="budget-table">
+          <thead>
+            <tr>
+              <th scope="col">Component</th>
+              <th scope="col">Evaluation</th>
+              <th scope="col">Input</th>
+              <th scope="col" title="Sensitivity coefficient">c<sub>i</sub></th>
+              <th scope="col" title="Degrees of freedom">ν<sub>i</sub></th>
+              <th scope="col" class="num">u(x<sub>i</sub>)</th>
+              <th scope="col" class="num">|c<sub>i</sub>|·u(x<sub>i</sub>)</th>
+              <th scope="col" class="num">Share</th>
+              <th scope="col" class="no-print"><span class="sr-only">Remove</span></th>
+            </tr>
+          </thead>
+          <tbody id="budget-rows"></tbody>
+        </table>
+      </div>
+      <button type="button" class="btn no-print" id="add-row">+ Add component</button>
+
+      <div class="results" id="budget-results" aria-live="polite"></div>
+      <div class="contrib" id="contrib-chart" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ 2. Conformity ============ -->
+    <section id="conformity" class="card">
+      <div class="card-head">
+        <h2><span class="step">2</span> Conformity assessment</h2>
+        <button type="button" class="btn ghost no-print" id="use-budget">Use U from the budget</button>
+      </div>
+
+      <div class="grid-3">
+        <label>Measured value (or error)
+          <input type="text" inputmode="decimal" id="c-value" placeholder="e.g. 0.30">
+        </label>
+        <label>Lower tolerance limit
+          <input type="text" inputmode="decimal" id="c-lower" placeholder="empty = none">
+        </label>
+        <label>Upper tolerance limit
+          <input type="text" inputmode="decimal" id="c-upper" placeholder="empty = none">
+        </label>
+        <label>Expanded uncertainty U
+          <input type="text" inputmode="decimal" id="c-U" placeholder="e.g. 0.16">
+        </label>
+        <label>Coverage factor k of U
+          <input type="text" inputmode="decimal" id="c-k" value="2">
+        </label>
+        <label>Decision rule
+          <select id="c-rule">
+            <option value="simple">Simple acceptance (w = 0)</option>
+            <option value="guarded">Guarded acceptance (w = U)</option>
+            <option value="custom">Custom guard band w</option>
+          </select>
+        </label>
+        <label id="c-w-wrap" hidden>Guard band w
+          <input type="text" inputmode="decimal" id="c-w" placeholder="e.g. 0.08">
+        </label>
+      </div>
+
+      <div id="conformity-chart" class="chart"></div>
+      <div id="conformity-results" class="results" aria-live="polite"></div>
+
+      <fieldset class="verdict">
+        <legend>Your decision</legend>
+        <p class="muted small">The statements above follow from your inputs and the decision rule you chose. The conformity decision is yours.</p>
+        <div class="radio-row" role="radiogroup" aria-label="Decision">
+          <label class="radio"><input type="radio" name="decision" value="conform"> Conforms</label>
+          <label class="radio"><input type="radio" name="decision" value="nonconform"> Does not conform</label>
+          <label class="radio"><input type="radio" name="decision" value="limited"> Limited use</label>
+        </div>
+        <div class="grid-3">
+          <label>Name
+            <input type="text" id="v-name" autocomplete="name">
+          </label>
+          <label>Date
+            <input type="date" id="v-date">
+          </label>
+          <label class="span-2">Comment
+            <input type="text" id="v-comment" placeholder="optional">
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <div class="actions no-print">
+      <button type="button" class="btn primary" id="print-btn">Print / save as PDF</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> Metroloom is a calculation tool. It applies the criteria you enter and shows the result;
+        it does not give professional metrological advice. You remain responsible for your budgets and conformity decisions.</p>
+      <p>Methods: JCGM 100:2008 (GUM), EA-4/02 M:2022, ILAC G8:09/2019. Calculations run locally in your browser; nothing is uploaded.</p>
+      <p class="muted">© 2026 Anna Badanina · <a href="https://github.com/BadaninaAnna/metroloom">Source code</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="src/ui/app.js"></script>
+</body>
+</html>
