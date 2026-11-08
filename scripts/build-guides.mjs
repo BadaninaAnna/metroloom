@@ -58,6 +58,11 @@ function head({ title, description, canonical, prefix, type = 'website', ld }) {
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="https://metroloom.net/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Metroloom: measurement uncertainty budget calculator">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="${prefix}assets/styles.css">
 ${ld.map((o) => `  <script type="application/ld+json">${json(o)}</script>`).join('\n')}
