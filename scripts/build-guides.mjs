@@ -66,6 +66,8 @@ function head({ title, description, canonical, prefix, type = 'website', ld }) {
   <link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="${prefix}assets/styles.css">
 ${ld.map((o) => `  <script type="application/ld+json">${json(o)}</script>`).join('\n')}
+  <!-- Cookie-free page view statistics; count.js ignores localhost. -->
+  <script data-goatcounter="https://metroloom.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>`;
 }
 
